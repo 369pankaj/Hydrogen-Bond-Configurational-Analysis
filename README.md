@@ -11,40 +11,7 @@ registry to arbitrary **binary osmolyte–water mixtures** (TMAO, DMSO, betaine,
 **ternary mixtures**, and **protein-containing systems**.
 
 ---
-flowchart TD
-    A[User chooses front-end] --> B{Front-end type}
 
-    B -->|Recommended| C[hb_run.py<br/>Registry-driven orchestrator]
-    B -->|Legacy/simple| D[run_hb.sh<br/>Bash orchestrator]
-
-    C --> C1[molecules.yaml<br/>chemistry registry]
-    C --> C2[systems.yaml<br/>system/job definitions]
-
-    D --> D1[config.sh<br/>systems + explicit species table]
-
-    C1 --> E[Generate donor→acceptor species list]
-    C2 --> E
-    D1 --> E2[Read fixed species list WW/OuW/NuW]
-
-    E --> F[hb_pmf_traj.py<br/>build 6-column P(r,θ)/P_rand grid]
-    E2 --> F
-
-    F --> G[species_grid.dat]
-    G --> H[species_grid_1st_shell.dat]
-
-    H --> I[hb_strength.py<br/>compute dG_2017 / dG_2020 / dG_PMF]
-    I --> J[strengths_<system>.csv]
-    I --> K[optional PMF plot]
-
-    L[validate.py] --> M[Regression check vs committed reference grids]
-
-    N[submit.slurm] --> O[Cluster execution wrapper]
-    O --> B
-
-    J --> P[results/<system>/]
-    K --> P
-    G --> P
-    H --> P
 ## Table of contents
 
 - [Contents](#contents) — files in this repository
