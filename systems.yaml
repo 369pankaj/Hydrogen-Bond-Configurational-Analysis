@@ -1,0 +1,65 @@
+# systems.yaml -- what to analyse. hb_run.py reads this + molecules.yaml, then
+# auto-generates every valid donor->acceptor species for each system's component
+# list (respecting acceptor-only chemistry and like-like symmetry).
+#
+# Run:   ./hb_run.py                 # all systems below
+#        ./hb_run.py 4M              # one system
+#        ./hb_run.py --dry-run 4M    # print the planned species, run nothing
+
+defaults:
+  stride: 200
+  temperature: 300           # K, used for BOTH the PMF column and dG
+  prand_theta: null          # null -> analytic sin(theta); or a path applied to all species
+  rmax: 4.0
+  shell: [2.49, 3.25]        # first-shell [rmin,rmax] in A, or "auto" (from the pair RDF)
+  neighbor_list: false       # true = capped neighbour search (fast for big systems)
+
+systems:
+
+  # ---- binary: urea/water (the validated reference system) ------------------ #
+  4M:
+    topology:   /work/Urea_Water/Smith_KWB/4M/md.gro
+    trajectory: /work/Urea_Water/Smith_KWB/4M/md.xtc
+    components: [water, urea]
+    # .gro has no bonds -> self-pairs excluded by residue (fine for small molecules)
+
+  4M_500:
+    topology:   /work/Urea_Water/Smith_KWB/4M/4M_500/md.gro
+    trajectory: /work/Urea_Water/Smith_KWB/4M/4M_500/md.xtc
+    components: [water, urea]
+
+  4M_1000:
+    topology:   /work/Urea_Water/Smith_KWB/4M/4M_1000/md.gro
+    trajectory: /work/Urea_Water/Smith_KWB/4M/4M_1000/md.xtc
+    components: [water, urea]
+
+  # ---- same system via .tpr: enables molecule-level exclusion --------------- #
+  4M_tpr:
+    topology:   /work/Urea_Water/Smith_KWB/4M/md.tpr
+    trajectory: /work/Urea_Water/Smith_KWB/4M/md.xtc
+    components: [water, urea]
+    exclude: molecule        # use bonded fragments instead of residues
+
+  # ---- TEMPLATES: fill in paths, then run.  These are examples of the shapes
+  #      the generalization supports; they are commented so `./hb_run.py` skips
+  #      them until you provide real trajectories. -------------------------- #
+  #
+  # binary_tmao:                       # binary osmolyte-water (acceptor-only osmolyte)
+  #   topology:   /path/to/tmao/md.tpr
+  #   trajectory: /path/to/tmao/md.xtc
+  #   components: [water, tmao]        # -> only species: water(D) -> tmao(O)(A) + water-water
+  #   shell: auto
+  #
+  # ternary_two_osmolyte:              # two osmolytes + water
+  #   topology:   /path/to/mix/md.tpr
+  #   trajectory: /path/to/mix/md.xtc
+  #   components: [water, urea, tmao]  # -> WW, urea-urea, urea<->water, water->tmao, urea->tmao...
+  #   shell: auto
+  #
+  # ternary_protein:                   # osmolyte(s) + protein + water
+  #   topology:   /path/to/prot/md.tpr # MUST be a bonded topology for the protein
+  #   trajectory: /path/to/prot/md.xtc
+  #   components: [water, urea, protein]
+  #   exclude: molecule                # protein self-pairs excluded by chain, not residue
+  #   neighbor_list: true              # large solvated system -> capped search
+  #   shell: auto

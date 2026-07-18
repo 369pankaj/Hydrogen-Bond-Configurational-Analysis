@@ -1,0 +1,56 @@
+# molecules.yaml -- H-bond chemistry registry.
+#
+# One entry per molecule type. hb_run.py turns these into donor/acceptor
+# MDAnalysis selections and decides directionality automatically:
+#
+#   donors     : heavy-atom NAMES that carry a polar H (the H's themselves are
+#                found covalently, per molecule, by hb_pmf_traj.py).
+#   acceptors  : heavy-atom NAMES with a lone pair that can accept an H-bond.
+#   like_like_symmetric : true only when a self-pair is geometrically symmetric
+#                (both partners donate AND accept through the SAME atom, e.g.
+#                water O). Urea is NOT symmetric: it donates through N, accepts
+#                through O, so its self-pair (urea-urea) is directional N->O.
+#
+# A molecule with EMPTY donors is acceptor-only: hb_run.py will only ever put it
+# on the acceptor side (e.g. TMAO/DMSO/betaine -- water donates TO them).
+#
+# The reference urea/water selections here reproduce the validated pipeline.
+# TMAO/DMSO/betaine/protein entries encode standard H-bond chemistry; adjust the
+# atom names to match YOUR force field's naming before trusting the numbers.
+
+molecules:
+
+  water:
+    resname: SOL
+    donors:    [OW]        # OW donates via HW1, HW2
+    acceptors: [OW]
+    like_like_symmetric: true
+
+  urea:
+    resname: UREA
+    donors:    [N1U, N2U]  # amine N-H's
+    acceptors: [OU]        # carbonyl O
+
+  # --- acceptor-only osmolytes (water donates to them; never donate) --------- #
+  tmao:
+    resname: TMAO
+    donors:    []
+    acceptors: [O]         # N-oxide oxygen (strong acceptor)
+
+  dmso:
+    resname: DMSO
+    donors:    []
+    acceptors: [O]         # sulfoxide oxygen
+
+  betaine:                 # glycine betaine / trimethylglycine
+    resname: BET
+    donors:    []
+    acceptors: [O1, O2]    # carboxylate oxygens
+
+  # --- polymer: selections span many residues, so exclude by MOLECULE -------- #
+  # 'kind: protein' makes hb_run.py use these raw selections directly and default
+  # its self-pair exclusion to the bonded fragment (needs a .tpr/.psf topology).
+  protein:
+    kind: protein
+    donor_sel:    "protein and name N NE NH1 NH2 ND1 ND2 NE1 NE2 NZ OG OG1 OH SG"
+    acceptor_sel: "protein and name O OD1 OD2 OE1 OE2 OG OG1 OH ND1 NE2 SD"
