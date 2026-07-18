@@ -476,10 +476,48 @@ unaffected.
 
 ---
 
-## References
+## Citation
 
-1. A. Sapir, D. Harries, *Revisiting Hydrogen Bond Thermodynamics in Molecular
-   Simulations*, **J. Chem. Theory Comput.** 2017, 13, 2851–2857.
-   [doi:10.1021/acs.jctc.7b00238](https://doi.org/10.1021/acs.jctc.7b00238)
-2. G. Olgenblum et al., **J. Chem. Theory Comput.** 2020, 16, 1249–1262.
-3. Internal note, G. Olgenblum (2023), followed by this project.
+If you use this repository in your research, please cite the relevant publication(s):
+
+### 1. Journal of Chemical Physics (2026)
+
+> Adhikary, P.; Biswas, R. *Vibrational spectral signature of water to probe the mystery of urea aggregation and validation of force fields*. **The Journal of Chemical Physics** **2026**, *164*(14), 144901. https://doi.org/10.1063/5.0311674 :contentReference[oaicite:0]{index=0}
+
+```bibtex
+@article{Adhikary2026JCP,
+  author  = {Pankaj Adhikary and Rajib Biswas},
+  title   = {Vibrational spectral signature of water to probe the mystery of urea aggregation and validation of force fields},
+  journal = {The Journal of Chemical Physics},
+  volume  = {164},
+  number  = {14},
+  pages   = {144901},
+  year    = {2026},
+  doi     = {10.1063/5.0311674},
+  url     = {https://doi.org/10.1063/5.0311674}
+}
+```
+
+### 2. Chemical Physics Impact (2024)
+
+> Adhikary, P.; Reddy, K. D.; Biswas, R. *Why does urea not alter the vibrational spectroscopic signatures of water?* **Chemical Physics Impact** **2024**, *8*, 100609. https://doi.org/10.1016/j.chphi.2024.100609 :contentReference[oaicite:1]{index=1}
+
+```bibtex
+@article{ADHIKARY2024100609,
+  title     = {Why does urea not alter the vibrational spectroscopic signatures of water?},
+  author    = {Pankaj Adhikary and Kambham Devendra Reddy and Rajib Biswas},
+  journal   = {Chemical Physics Impact},
+  volume    = {8},
+  pages     = {100609},
+  year      = {2024},
+  issn      = {2667-0224},
+  doi       = {10.1016/j.chphi.2024.100609},
+  url       = {https://doi.org/10.1016/j.chphi.2024.100609},
+  keywords  = {Urea, Theoretical IR Spectroscopy, Hydrogen Bond, Osmolyte, H-bond Strength, Chaotropic}
+}
+```
+## References
+1. P. Adhikary; R. Biswas, **J. Chem. Phys** 2026, *164*(14), 144901. https://doi.org/10.1063/5.0311674
+2. P. Adhikary; K. D. Reddy; R. Biswas, **Chemical Physics Impact** 2024, *8*, 100609. https://doi.org/10.1016/j.chphi.2024.100609
+3. A. Sapir, D. Harries, **J. Chem. Theory Comput.** 2017, 13, 2851–2857.
+4. G. Olgenblum et al., **J. Chem. Theory Comput.** 2020, 16, 1249–1262.
